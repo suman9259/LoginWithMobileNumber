@@ -27,7 +27,6 @@ public class LoginWithMobileNumberActivity extends Activity implements View.OnCl
     @Override
     public void onClick(View view) {
         if (isValidated()){
-
             Intent intent=new Intent(LoginWithMobileNumberActivity.this,VerificationCodeActivity.class);
             intent.putExtra("mobile_number",Validation.getString(mobileNumber));
             StartActivityUtils.doStartActivityWithRightAnimationWithPassIntent(this,intent);

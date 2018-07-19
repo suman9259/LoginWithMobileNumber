@@ -17,10 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class VerificationCodeActivity extends Activity {
+public class VerificationCodeActivity extends Activity implements View.OnClickListener {
     private TextView infoText,resend_text;
     private Button DoneBtn;
-    private LinearLayout below_lollipop,above_lollipop;
+    private LinearLayout below_lollipop,above_lollipop,done_btn;
     private EditText below_lollipop_edt,above_lollipop_edt;
     private String mobile_number;
     @Override
@@ -37,6 +37,8 @@ public class VerificationCodeActivity extends Activity {
         infoText.setText(msg);
         below_lollipop=(LinearLayout) findViewById(R.id.below_lollipop);
         above_lollipop=(LinearLayout)findViewById(R.id.above_lollipop);
+        done_btn=(LinearLayout)findViewById(R.id.avc_done_btn);
+        done_btn.setOnClickListener(this);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
             below_lollipop_edt=(EditText)findViewById(R.id.below_lollipop_edt);
@@ -49,6 +51,18 @@ public class VerificationCodeActivity extends Activity {
         }
         resend_text=(TextView)findViewById(R.id.avc_resend_txt);
     }
+    private boolean doValidate() {
+        boolean flag = false;
+        if (Validation.isEmpty(below_lollipop_edt)) {
+            Toast.makeText(this, "enter validation code", Toast.LENGTH_SHORT).show();
+        } else if (!(Validation.getString(below_lollipop_edt).length() == 6)) {
+            Toast.makeText(this, "Enter valid code", Toast.LENGTH_SHORT).show();
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+
     public void setSpannableText(){
         SpannableString resend_code=new SpannableString(getString(R.string.resend_code));
         MyClickableSpan on_click_resend=new MyClickableSpan(){
@@ -68,5 +82,10 @@ public class VerificationCodeActivity extends Activity {
         resend_code.setSpan(styleSpan,20,26,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         resend_text.setText(resend_code);
         resend_text.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    @Override
+    public void onClick(View view) {
+        doValidate();
     }
 }

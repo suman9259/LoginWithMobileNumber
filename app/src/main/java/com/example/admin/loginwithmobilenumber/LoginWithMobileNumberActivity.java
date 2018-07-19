@@ -30,6 +30,7 @@ public class LoginWithMobileNumberActivity extends Activity implements View.OnCl
 
             Intent intent=new Intent(LoginWithMobileNumberActivity.this,VerificationCodeActivity.class);
             intent.putExtra("mobile_number",Validation.getString(mobileNumber));
+            StartActivityUtils.doStartActivityWithRightAnimationWithPassIntent(this,intent);
             startActivity(intent);
 
         }
